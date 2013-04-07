@@ -1,0 +1,20 @@
+{
+  "name": "sensorium",
+  "version": "0.0.1",
+  "description": "Capture pictures in your browser",
+  "main": "index.js",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-component": "~0.1.2",
+    "grunt-contrib-jshint": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com:BrettBukowski/sensorium.git"
+  },
+  "author": "Brett Bukowski",
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}

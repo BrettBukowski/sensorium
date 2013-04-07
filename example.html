@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sensorium Example</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="styles/sensorium.css">
+  <style type="text/css">
+  #go {width: 35%; margin: auto;}
+  </style>
+</head>
+<body>
+  <div id="go">
+    <button type="button">Start!</button>
+  </div>
+
+  <script src="build/sensorium.js"></script>
+  <script>
+  var Sensorium = require('sensorium'),
+      sensorium = new Sensorium(document.querySelector('#go'));
+
+  sensorium.on('capture', function (dataURI) {
+    var img = document.createElement('img');
+    img.src = dataURI;
+    document.body.appendChild(img);
+  });
+
+  document.querySelector('button').addEventListener('click', function (e) {
+    sensorium.start();
+
+    e.target.parentNode.removeChild(e.target);
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "sensorium",
+  "repo": "BrettBukowski/sensorium",
+  "description": "Capture pictures in your browser",
+  "version": "0.0.1",
+  "keywords": [
+    "getUserMedia",
+    "pictures"
+  ],
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "index.js",
+    "lib/Sensorium.js",
+    "lib/Video.js",
+    "lib/VideoControls.js"
+  ],
+  "styles": [
+    "styles/sensorium.css"
+  ],
+  "dependencies": {
+    "component/emitter": "*",
+    "component/bind": "*"
+  }
+}

@@ -1,0 +1,36 @@
+.sensorium {
+  background: #000;
+  border-radius: 2px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+  overflow: hidden;
+  position: relative;
+}
+.sensorium video,
+.sensorium .controls {
+  position: absolute;
+}
+.sensorium .controls {
+  left: 0;
+  padding: 4px;
+  right: 0;
+  z-index: 1;
+}
+.sensorium video {
+  height: 100%;
+  width: 100%;
+}
+.sensorium .header {
+  top: 0;
+  text-align: right;
+}
+.sensorium .footer {
+  bottom: 0;
+  text-align: center;
+}
+.sensorium button {
+  cursor: pointer;
+}
+.sensorium a {
+  color: #FFF;
+  text-decoration: none;
+}
