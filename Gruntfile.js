@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      all: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js', 'index.js'],
+      all: ['Gruntfile.js', 'lib/**/*.js', 'spec/**/*.js', 'index.js'],
       options: {
         expr: true,
         browser: true,
@@ -35,16 +35,36 @@ module.exports = function(grunt) {
 
     watch: {
       scripts: {
-        files: ['index.js', 'lib/**/*.js', 'component.json', 'Gruntfile.js'],
-        tasks: ['jshint', 'component']
+        files: ['index.js', 'lib/**/*.js', 'spec/**/*.js', 'component.json', 'Gruntfile.js'],
+        tasks: ['jshint', 'component', 'jasmine', 'docker']
+      }
+    },
+
+    docker: {
+      app: {
+        expand: true,
+        src: ['lib/*.js'],
+        dest: 'docs'
+      }
+    },
+
+    jasmine: {
+      sensorium: {
+        src: ['build/sensorium.js'],
+        options: {
+          specs: ['spec/sensoriumSpec.js']
+        }
       }
     }
 
   });
 
+  grunt.loadNpmTasks('grunt-docker');
   grunt.loadNpmTasks('grunt-component');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
 
+  grunt.registerTask('build', ['jshint', 'jasmine', 'component', 'uglify', 'docker']);
 };
