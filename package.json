@@ -20,6 +20,6 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "scripts": {
-    "test": "grunt jasmine"
+    "test": "grunt test"
   }
 }
