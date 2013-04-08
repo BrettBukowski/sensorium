@@ -18,5 +18,8 @@
   },
   "author": "Brett Bukowski",
   "license": "MIT",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "scripts": {
+    "test": "grunt jasmine"
+  }
 }
