@@ -8,7 +8,8 @@ module.exports = function(grunt) {
         options: {
           action: 'build',
           args: {
-            name: '<%= pkg.name %>'
+            name: '<%= pkg.name %>',
+            prefix: '/build'
           }
         }
       }

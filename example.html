@@ -3,7 +3,7 @@
 <head>
   <title>Sensorium Example</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="styles/sensorium.css">
+  <link rel="stylesheet" type="text/css" href="build/sensorium.css">
   <style type="text/css">
   #go {width: 35%; margin: auto;}
   </style>
@@ -16,7 +16,10 @@
   <script src="build/sensorium.js"></script>
   <script>
   var Sensorium = require('sensorium'),
-      sensorium = new Sensorium(document.querySelector('#go'));
+      sensorium = new Sensorium('#go', {
+        width: 640,
+        height: 480
+      });
 
   sensorium.on('capture', function (dataURI) {
     var img = document.createElement('img');

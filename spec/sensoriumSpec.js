@@ -57,8 +57,8 @@ describe("Sensorium", function () {
       expect(document.querySelector('.sensorium')).not.toBeNull();
       expect(document.querySelector('video')).not.toBeNull();
 
-      expect(document.querySelector('.sensorium .header a').innerHTML).toEqual(Sensorium.Labels.CANCEL);
-      expect(document.querySelector('.sensorium .footer button').innerHTML).toEqual(Sensorium.Labels.TAKE_PICTURE);
+      expect(document.querySelector('.sensorium .header a').textContent.trim()).toEqual(Sensorium.Labels.CANCEL);
+      expect(document.querySelector('.sensorium .footer button').textContent.trim()).toEqual(Sensorium.Labels.TAKE_PICTURE);
 
       sens.stop();
     });

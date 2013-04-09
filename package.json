@@ -1,6 +1,7 @@
 {
   "name": "sensorium",
   "version": "0.0.1",
+  "private": true,
   "description": "Capture pictures in your browser",
   "main": "index.js",
   "devDependencies": {

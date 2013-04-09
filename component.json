@@ -5,7 +5,9 @@
   "version": "0.0.1",
   "keywords": [
     "getUserMedia",
-    "pictures"
+    "pictures",
+    "webcam",
+    "capture"
   ],
   "development": {},
   "license": "MIT",
@@ -16,7 +18,13 @@
     "lib/VideoControls.js"
   ],
   "styles": [
-    "styles/sensorium.css"
+    "styles/sensorium.css",
+    "fonts/fontawesome.css"
+  ],
+  "fonts": [
+    "fonts/fontawesome-webfont.eot",
+    "fonts/fontawesome-webfont.ttf",
+    "fonts/fontawesome-webfont.woff"
   ],
   "dependencies": {
     "component/emitter": "*",
