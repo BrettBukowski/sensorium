@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sensorium.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../", thisFile = "lib/Sensorium.js", defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+      <div class="heading h2">
+        <a href="#sensorium">Sensorium</a>
+      </div>
+      <div class="heading h3">
+        <a href="#start">start</a>
+      </div>
+      <div class="heading h3">
+        <a href="#capture">capture</a>
+      </div>
+      <div class="heading h3">
+        <a href="#stop">stop</a>
+      </div>
+      <div class="heading h2">
+        <a href="#sensorium.labels">Sensorium.Labels</a>
+      </div>
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container"><div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+        <td class="docs">
+          <h1>Sensorium.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
+</div>
+<div class="dox">
+  <div class="summary"><p>Exposed as a public interface.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre><span class="s2">&quot;use strict&quot;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">Video</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./Video&#39;</span><span class="p">),</span>
+    <span class="nx">VideoControls</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./VideoControls&#39;</span><span class="p">),</span>
+    <span class="nx">bind</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;bind&#39;</span><span class="p">),</span>
+    <span class="nx">emitter</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;emitter&#39;</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">Sensorium</span><span class="p">;</span>
+
+<span class="nx">navigator</span><span class="p">.</span><span class="nx">getUserMedia</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">getUserMedia</span> <span class="o">||</span>
+              <span class="nx">navigator</span><span class="p">.</span><span class="nx">webkitGetUserMedia</span> <span class="o">||</span>
+              <span class="nx">navigator</span><span class="p">.</span><span class="nx">mozGetUserMedia</span> <span class="o">||</span>
+              <span class="nx">navigator</span><span class="p">.</span><span class="nx">msGetUserMedia</span><span class="p">;</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="sensorium">
+  <h2>
+    <a href="#sensorium" class="pilcrow">&#182;</a>
+    Sensorium
+  </h2>
+</div>
+
+
+<p>Sets up the video.</p>
+  </div>
+  <div class="body">
+  </div>
+  <div class="details">
+    <div class="dox_tag_title">Params</div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name">container</span>
+      <span class="dox_type">Object</span>
+      <span class="dox_type">String</span>
+      <span>Element to insert the video into;
+ Either an HTMLElement or String selector</span>
+    </div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name">[options={}]</span>
+      <span class="dox_type">Object=</span>
+      <span>Options:
+
+<ul>
+<li>width: {String} width (in pixels) defaults to 400px</li>
+<li>height: {String} height (in pixels) defaults to 300px</li>
+<li>img: {String|Object} String selector or HTMLElement: image element to
+receive the captured image.</li>
+</ul>
+
+<hr />
+
+Width and height should be specified in a 4:3 aspect ratio.
+ If not supplied in that way, the browser will still maintain
+ the proper aspect ratio according to the max width or height
+ specified but adds padding width or height in the other axis
+ accomodate.</span>
+    </div>
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+<span class="kd">function</span> <span class="nx">Sensorium</span> <span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">_init</span><span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">Sensorium</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">_init</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">container</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_setContainer</span><span class="p">(</span><span class="nx">container</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_extend</span><span class="p">({</span>
+      <span class="nx">width</span><span class="o">:</span> <span class="s1">&#39;400px&#39;</span><span class="p">,</span>
+      <span class="nx">height</span><span class="o">:</span> <span class="s1">&#39;300px&#39;</span>
+    <span class="p">},</span> <span class="nx">options</span><span class="p">);</span>
+
+    <span class="nx">emitter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3">&#182;</a>
+</div>
+<div class="dox">
+  <div class="summary"><p>Sets the container.
+Defaults to <code>document.body</code> if a valid
+element can't be found.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">_setContainer</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">container</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">container</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">container</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="nx">container</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">container</span> <span class="o">=</span> <span class="nx">container</span> <span class="o">||</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+  <span class="p">},</span>
+
+  <span class="nx">_extend</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dest</span><span class="p">,</span> <span class="nx">source</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">source</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">source</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">source</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">val</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">dest</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">dest</span><span class="p">;</span>
+  <span class="p">},</span>
+
+  <span class="nx">_userMediaError</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4">&#182;</a>
+</div>
+<p><strong>getUserMedia:error event</strong>: passed error object</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;getUserMedia:error&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+  <span class="p">},</span>
+
+  <span class="nx">_userMediaSuccess</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">stream</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_initVideo</span><span class="p">();</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5">&#182;</a>
+</div>
+<p><strong>getUserMedia:success event</strong>: passed the MediaStream and video object</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;getUserMedia:success&#39;</span><span class="p">,</span> <span class="nx">stream</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">vid</span><span class="p">);</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">vid</span><span class="p">.</span><span class="nx">setMediaStream</span><span class="p">(</span><span class="nx">stream</span><span class="p">);</span>
+  <span class="p">},</span>
+
+  <span class="nx">_initVideo</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">videoControls</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_createVideoControls</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">vid</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_createVideo</span><span class="p">().</span><span class="nx">attachControls</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">videoControls</span><span class="p">);</span>
+  <span class="p">},</span>
+
+  <span class="nx">_createVideo</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Video</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">).</span><span class="nx">attachTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">container</span><span class="p">);</span>
+  <span class="p">},</span>
+
+  <span class="nx">_createVideoControls</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">controls</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">VideoControls</span><span class="p">(</span><span class="nx">Sensorium</span><span class="p">.</span><span class="nx">Labels</span><span class="p">);</span>
+
+    <span class="nx">controls</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;cancel&#39;</span><span class="p">,</span> <span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">stop</span><span class="p">));</span>
+    <span class="nx">controls</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;capture&#39;</span><span class="p">,</span> <span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">capture</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="nx">controls</span><span class="p">;</span>
+  <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6">&#182;</a>
+</div>
+<p>The video stream's content has to be drawn to a canvas
+in order to get a frame. Fortunately, this canvas
+doesn't have to be actually inserted into the document.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">_createCanvas</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">);</span>
+    <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">width</span><span class="p">);</span>
+    <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nx">canvas</span><span class="p">;</span>
+  <span class="p">},</span>
+
+  <span class="nx">_getRenderedCanvasData</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_canvas</span> <span class="o">||</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_canvas</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_createCanvas</span><span class="p">());</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;2d&#39;</span><span class="p">).</span><span class="nx">drawImage</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">vid</span><span class="p">.</span><span class="nx">getVideoElement</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">width</span><span class="p">),</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">height</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_canvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s1">&#39;image/png&#39;</span><span class="p">);</span>
+  <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7">&#182;</a>
+</div>
+<p>If <code>img</code> was specified in the options to Sensorium,
+its <code>src</code> attribute is updated to the captured image frame.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">_updateImage</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">dataURI</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">img</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">img</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">img</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">img</span><span class="p">);</span>
+      <span class="p">}</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;src&#39;</span> <span class="k">in</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">img</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">dataURI</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="start">
+  <h3>
+    <a href="#start" class="pilcrow">&#182;</a>
+    start
+  </h3>
+</div>
+
+
+<p>Call to start the media capture process.
+This will trigger the browser asking the user
+if she wants to allow access.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">start</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">navigator</span><span class="p">.</span><span class="nx">getUserMedia</span><span class="p">({</span> <span class="nx">video</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_userMediaSuccess</span><span class="p">),</span> <span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_userMediaError</span><span class="p">));</span>
+  <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="capture">
+  <h3>
+    <a href="#capture" class="pilcrow">&#182;</a>
+    capture
+  </h3>
+</div>
+
+
+<p>Call to capture an image on the media stream.
+<code>start</code> must have already have been called.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">capture</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getRenderedCanvasData</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_updateImage</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10">&#182;</a>
+</div>
+<p><strong>capture event</strong>: passed the data URI image data</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;capture&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+  <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="stop">
+  <h3>
+    <a href="#stop" class="pilcrow">&#182;</a>
+    stop
+  </h3>
+</div>
+
+
+<p>Call to stop capturing and to destroy the video element.
+<code>start</code> must have already have been called.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">stop</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">videoControls</span><span class="p">.</span><span class="nx">destroy</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">vid</span><span class="p">.</span><span class="nx">destroy</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="sensorium.labels">
+  <h2>
+    <a href="#sensorium.labels" class="pilcrow">&#182;</a>
+    Sensorium.Labels
+  </h2>
+</div>
+
+
+<p>Labels used for the UI.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+<span class="nx">Sensorium</span><span class="p">.</span><span class="nx">Labels</span> <span class="o">=</span> <span class="p">{</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13">&#182;</a>
+</div>
+<p>cancel label</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">CANCEL</span><span class="o">:</span> <span class="s1">&#39;Cancel&#39;</span><span class="p">,</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14">&#182;</a>
+</div>
+<p>take picture label</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">TAKE_PICTURE</span><span class="o">:</span> <span class="s1">&#39;Take Picture&#39;</span>
+<span class="p">};</span>
+</pre></div>
+        </td>
+      </tr>
+  </tbody>
+</table>
+  </div>
+</body>
+</html>

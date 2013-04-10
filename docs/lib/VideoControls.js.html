@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VideoControls.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../", thisFile = "lib/VideoControls.js", defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+      <div class="heading h2">
+        <a href="#videocontrols">VideoControls</a>
+      </div>
+      <div class="heading h3">
+        <a href="#header">header</a>
+      </div>
+      <div class="heading h3">
+        <a href="#footer">footer</a>
+      </div>
+      <div class="heading h2">
+        <a href="#videocontrols.classes">VideoControls.Classes</a>
+      </div>
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container"><div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+        <td class="docs">
+          <h1>VideoControls.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
+</div>
+<div class="dox">
+  <div class="summary"><p>Internal use only - not exposed as a public interface.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre><span class="s2">&quot;use strict&quot;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">emitter</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;emitter&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">bind</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;bind&#39;</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">VideoControls</span><span class="p">;</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="videocontrols">
+  <h2>
+    <a href="#videocontrols" class="pilcrow">&#182;</a>
+    VideoControls
+  </h2>
+</div>
+
+
+<p>Encapsulates video controls.</p>
+  </div>
+  <div class="body">
+  </div>
+  <div class="details">
+    <div class="dox_tag_title">Params</div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name">labels
+</span>
+      <span class="dox_type">Object</span>
+    </div>
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+<span class="kd">function</span> <span class="nx">VideoControls</span> <span class="p">(</span><span class="nx">labels</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">labels</span> <span class="o">=</span> <span class="nx">labels</span><span class="p">;</span>
+
+  <span class="nx">emitter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">VideoControls</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">_createElement</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">tagName</span><span class="p">,</span> <span class="nx">attrs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">tagName</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">attrs</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">attrs</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">el</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">attrs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">el</span><span class="p">;</span>
+  <span class="p">},</span>
+
+  <span class="nx">_removeElement</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">el</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">el</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+
+  <span class="nx">_createLabel</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">className</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">&#39;&lt;i class=&quot;&#39;</span> <span class="o">+</span> <span class="nx">className</span> <span class="o">+</span> <span class="s1">&#39;&quot;&gt;&lt;/i&gt; &lt;span class=&quot;label&quot;&gt;&#39;</span> <span class="o">+</span> <span class="nx">text</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">;</span>
+  <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3">&#182;</a>
+</div>
+<div class="dox">
+  <div class="summary"><p>Creates header HTMLElement containing single <code>&lt;a&gt;</code> close link.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">_createHeader</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">header</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">className</span><span class="o">:</span> <span class="s1">&#39;controls header&#39;</span> <span class="p">}),</span>
+        <span class="nx">a</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_createElement</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="p">{</span>
+          <span class="nx">href</span><span class="o">:</span> <span class="s1">&#39;#&#39;</span><span class="p">,</span>
+          <span class="nx">innerHTML</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">_createLabel</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">labels</span><span class="p">.</span><span class="nx">CANCEL</span><span class="p">,</span> <span class="nx">VideoControls</span><span class="p">.</span><span class="nx">Classes</span><span class="p">.</span><span class="nx">CANCEL</span><span class="p">)</span>
+        <span class="p">});</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4">&#182;</a>
+</div>
+<p><strong>cancel event</strong>: called when the header link is clicked</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="nx">a</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">clickHandler</span><span class="p">,</span> <span class="s1">&#39;cancel&#39;</span><span class="p">));</span>
+
+    <span class="nx">header</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nx">header</span><span class="p">;</span>
+  <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5">&#182;</a>
+</div>
+<div class="dox">
+  <div class="summary"><p>Creates footer HTMLElement containing single <code>&lt;button&gt;</code> capture button.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">_createFooter</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">footer</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">className</span><span class="o">:</span> <span class="s1">&#39;controls footer&#39;</span> <span class="p">}),</span>
+        <span class="nx">button</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_createElement</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="p">{</span>
+          <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;button&#39;</span><span class="p">,</span>
+          <span class="nx">innerHTML</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">_createLabel</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">labels</span><span class="p">.</span><span class="nx">TAKE_PICTURE</span><span class="p">,</span> <span class="nx">VideoControls</span><span class="p">.</span><span class="nx">Classes</span><span class="p">.</span><span class="nx">TAKE_PICTURE</span><span class="p">)</span>
+        <span class="p">});</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6">&#182;</a>
+</div>
+<p><strong>capture event</strong>: called when the footer button is clicked</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">clickHandler</span><span class="p">,</span> <span class="s1">&#39;capture&#39;</span><span class="p">));</span>
+
+    <span class="nx">footer</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">button</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nx">footer</span><span class="p">;</span>
+  <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="header">
+  <h3>
+    <a href="#header" class="pilcrow">&#182;</a>
+    header
+  </h3>
+</div>
+
+
+<p>Returns the HTMLElement to be used for the controls header.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">header</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_header</span> <span class="o">||</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_header</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_createHeader</span><span class="p">()));</span>
+  <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="footer">
+  <h3>
+    <a href="#footer" class="pilcrow">&#182;</a>
+    footer
+  </h3>
+</div>
+
+
+<p>Returns the HTMLElement to be used for the controls footer.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">footer</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_footer</span> <span class="o">||</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_footer</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_createFooter</span><span class="p">()));</span>
+  <span class="p">},</span>
+
+  <span class="nx">clickHandler</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">e</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+  <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9">&#182;</a>
+</div>
+<div class="dox">
+  <div class="summary"><p>Destroy the elements and close up shop.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">destroy</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_removeElement</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_header</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_removeElement</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_footer</span><span class="p">);</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">_header</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_footer</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="videocontrols.classes">
+  <h2>
+    <a href="#videocontrols.classes" class="pilcrow">&#182;</a>
+    VideoControls.Classes
+  </h2>
+</div>
+
+
+<p>Icon classes for UI components.</p>
+  </div>
+  <div class="body">
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+<span class="nx">VideoControls</span><span class="p">.</span><span class="nx">Classes</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">CANCEL</span><span class="o">:</span>       <span class="s1">&#39;icon-remove&#39;</span><span class="p">,</span>
+  <span class="nx">TAKE_PICTURE</span><span class="o">:</span> <span class="s1">&#39;icon-camera&#39;</span>
+<span class="p">};</span>
+</pre></div>
+        </td>
+      </tr>
+  </tbody>
+</table>
+  </div>
+</body>
+</html>
