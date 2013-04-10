@@ -104,10 +104,10 @@
  */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("/build/sensorium/fonts/fontawesome-webfont.eot?v=3.0.1");
-  src: url("/build/sensorium/fonts/fontawesome-webfont.eot?#iefix&v=3.0.1") format('embedded-opentype'),
-    url("/build/sensorium/fonts/fontawesome-webfont.woff?v=3.0.1") format('woff'),
-    url("/build/sensorium/fonts/fontawesome-webfont.ttf?v=3.0.1") format('truetype');
+  src: url("/sensorium/build/sensorium/fonts/fontawesome-webfont.eot?v=3.0.1");
+  src: url("/sensorium/build/sensorium/fonts/fontawesome-webfont.eot?#iefix&v=3.0.1") format('embedded-opentype'),
+    url("/sensorium/build/sensorium/fonts/fontawesome-webfont.woff?v=3.0.1") format('woff'),
+    url("/sensorium/build/sensorium/fonts/fontawesome-webfont.ttf?v=3.0.1") format('truetype');
   font-weight: normal;
   font-style: normal;
 }
