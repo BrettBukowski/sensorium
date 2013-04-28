@@ -20,11 +20,11 @@ Then,
 
 Check the example.html file for a demo.
 
-If you don't want to use component, include the .min.js file on the page:
+If you don't want to use component, include the [.min.js file][js] on the page:
 
     <script src="build/sensorium.min.js"></script>
 
-And the CSS:
+And the [CSS][css]:
 
     <link rel="stylesheet" type="text/css" href="build/sensorium.css">
 
@@ -96,3 +96,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [rtc]: http://www.webrtc.org/
 [pic]: https://dl.dropbox.com/u/302368/github/sensorium.jpg
 [component]: https://github.com/component/component/
+[js]: https://github.com/BrettBukowski/sensorium/blob/gh-pages/build/sensorium.min.js
+[css]: https://github.com/BrettBukowski/sensorium/blob/gh-pages/build/sensorium.css
