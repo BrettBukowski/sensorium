@@ -6,6 +6,7 @@
   font-size: smaller;
   overflow: hidden;
   position: relative;
+  text-align: left;
 }
 .sensorium video,
 .sensorium .controls {
