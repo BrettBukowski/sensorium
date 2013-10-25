@@ -1,7 +1,7 @@
 sensorium
 =========
 
-[![Build Status](https://travis-ci.org/BrettBukowski/sensorium.png?branch=master)](https://travis-ci.org/BrettBukowski/sensorium)
+[![Build Status](https://travis-ci.org/BrettBukowski/sensorium.png?branch=master)](https://travis-ci.org/BrettBukowski/sensorium) [![Code Climate](https://codeclimate.com/github/BrettBukowski/sensorium.png)](https://codeclimate.com/github/BrettBukowski/sensorium)
 
 
 Simple browser component that uses [WebRTC][rtc] to display the user's webcam stream and capture a still frame.
